@@ -2,7 +2,7 @@
 command = beeline -u jdbc:hive2://master:10000/aaa -f test.sql
 在hive的aaa数据库中执行一个test.sql
 
-2.使用sqoop-hive 前要把hive/lib底下的hive-common-1.1.0-cdh5.13.2.jar、hive-exec-1.1.0-cdh5.13.2.jar放到sqoop的lib里
+2.使用sqoop-hive 前要把hive/lib底下的hive-common-1.1.0-cdh5.13.2.jar、hive-exec-1.1.0-cdh5.13.2.jar放到sqoop的lib里，否则会报classNotFound。
 3.要把mysql的驱动包放到sqoop的lib里
 4.要给mysql添加所有机器都能访问mysql的权限
 grant all privileges on *.* to 'root'@'%'identified by 'admin';
