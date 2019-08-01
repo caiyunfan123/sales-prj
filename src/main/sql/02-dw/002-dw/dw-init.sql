@@ -81,6 +81,15 @@ create table fact_sales_order
    order_amount         decimal(18,2)
 )
 partitioned by (order_date string)
-clustered by (order_sk ) into 8 buckets
+clustered by (order_sk) into 1 buckets
 row format delimited fields terminated by '\t'
 stored as orc tblproperties('transactional'='true');
+
+/*==============================================================*/
+/* Table: cdc_time                                             */
+/*==============================================================*/
+create table sales_rds.cdc_time
+(
+    last_load       date,
+    current_load  date
+);
