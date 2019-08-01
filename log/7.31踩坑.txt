@@ -1,0 +1,16 @@
+1.azkaban写job任务时，本质是执行shell脚本，因此shell上能执行的命令写进去就能执行，如：
+command = beeline -u jdbc:hive2://master:10000/aaa -f test.sql
+在hive的aaa数据库中执行一个test.sql
+
+2.使用sqoop-hive 前要把hive/lib底下的hive-common-1.1.0-cdh5.13.2.jar、hive-exec-1.1.0-cdh5.13.2.jar放到sqoop的lib里
+3.要把mysql的驱动包放到sqoop的lib里
+4.要给mysql添加所有机器都能访问mysql的权限
+grant all privileges on *.* to '登陆mysql的账号名'@'%'（百分号表示任意机子） identified by '账号密码';
+grant all on *.* to '登陆mysql的账号名'@'%' identified by '账号密码';
+flush privileges;
+
+5.可以用--fields-terminated-by '\t' 指定sqoop导出文件的字段间隔符
+6.hive-overwrite覆盖导入时，不要用--target-dir指定目录，这个参数指定的是临时目录，并不是目标目录！！！！
+不指定的话sqoop会自动创建，执行完就删除。
+如果使用了该参数，相当于指定临时目录的位置，还需要保证该目录不存在否则会报错
+除此之外，还会导致原本指定好的字段间隔符无效！！
