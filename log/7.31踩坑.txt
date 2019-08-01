@@ -5,8 +5,8 @@ command = beeline -u jdbc:hive2://master:10000/aaa -f test.sql
 2.使用sqoop-hive 前要把hive/lib底下的hive-common-1.1.0-cdh5.13.2.jar、hive-exec-1.1.0-cdh5.13.2.jar放到sqoop的lib里
 3.要把mysql的驱动包放到sqoop的lib里
 4.要给mysql添加所有机器都能访问mysql的权限
-grant all privileges on *.* to '登陆mysql的账号名'@'%'（百分号表示任意机子） identified by '账号密码';
-grant all on *.* to '登陆mysql的账号名'@'%' identified by '账号密码';
+grant all privileges on *.* to 'root'@'%'identified by 'admin';
+grant all on *.* to 'root'@'%' identified by 'admin';
 flush privileges;
 
 5.可以用--fields-terminated-by '\t' 指定sqoop导出文件的字段间隔符
