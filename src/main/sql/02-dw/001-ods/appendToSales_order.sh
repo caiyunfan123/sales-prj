@@ -1,16 +1,15 @@
 sqoop job --create myjob -- import --connect jdbc:mysql://master:3306/sales_source \
---username root \
---password admin  \
---query "select * from sales_order where \$CONDITIONS" \
---hive-import \
---hive-database sales_rds \
---hive-table sales_order \
---split-by order_number \
---fields-terminated-by '\t' \
---lines-terminated-by '\n' \
---target-dir /hive/warehouse/sales_rds.db/sales_order \
---hive-delims-replacement ' ' \
---incremental append \
---check-column entry_date \
---password-file /sqoop/pwd/sqoopPWD.pwd
---last-value '1900-1-1'
+    --username root \
+    --password admin \
+    --query "select * from sales_order where \$CONDITIONS" \
+    --hive-import \
+    --hive-database sales_rds \
+    --hive-table sales_order \
+    --target-dir /user/hive2/warehouse/sales_rds.db/sales_order \
+    --split-by order_number \
+    --fields-terminated-by '\t' \
+    --lines-terminated-by '\n' \
+    --hive-delims-replacement ' ' \
+    --incremental append \
+    --check-column entry_date \
+    --last-value '1900-1-1' \
