@@ -13,4 +13,4 @@ sqoop job --create myjob -- import --connect jdbc:mysql://master:3306/sales_sour
 --incremental append \
 --check-column entry_date \
 --password-file /sqoop/pwd/sqoopPWD.pwd
---last-value '1800-1-1'
+--last-value '1900-1-1'
