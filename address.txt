@@ -1,0 +1,1 @@
+ssh://admin@localhost:29418/sale-project1.git
