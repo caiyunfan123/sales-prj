@@ -1,0 +1,11 @@
+1.按照文档安装基本没什么问题，这里做点补充，文档解释不清楚的地方。
+
+2.创建一个azkaban文件夹，把azkaban-web和azkaban-executor这两个压缩包都解压到这里，名字一个改成webserver，另一个改成executor
+
+3.关于时区：date -R如果显示的是+0800，就不用改了
+
+4.ssl配置完会在你执行命令的目录下生成一个keystore，后面会用上。
+
+5.设置路径的时候尽量用全名，剩下的到各个配置文件里面讲，webserver_conf里放的是web的对应配置文件，executor_conf放的是executor的对应配置文件
+
+6.web服务开起来之后就可以去网站看了，https://master:15000，这是我的登陆网址，默认是https://主机名:8443，账号密码是admin
