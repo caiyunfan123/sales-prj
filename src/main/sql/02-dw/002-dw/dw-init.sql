@@ -17,7 +17,7 @@ create table dim_Product
    effective_date       date,
    expiry_date          date
 )
-clustered by (product_sk ) into 8 buckets
+clustered by (product_sk ) into 1 buckets
 stored as orc tblproperties('transactional'='true'); -- 要更新维度表时，必须设置'transactional'='true'
 
 
@@ -37,7 +37,7 @@ create table dim_customer
    effective_date       date,
    expiry_date          date
 )
-clustered by (customer_sk ) into 8 buckets
+clustered by (customer_sk ) into 1 buckets
 stored as orc tblproperties('transactional'='true');
 
 /*==============================================================*/
@@ -65,9 +65,8 @@ create table dim_order
    effective_date       date,
    expiry_date          date
 )
-clustered by (order_sk ) into 8 buckets
+clustered by (order_sk ) into 1 buckets
 stored as orc tblproperties('transactional'='true');
-;
 
 /*==============================================================*/
 /* Table: fact_sales_order   ，事实表                                  */
@@ -86,10 +85,28 @@ row format delimited fields terminated by '\t'
 stored as orc tblproperties('transactional'='true');
 
 /*==============================================================*/
-/* Table: cdc_time                                             */
+/* Table: cdc_time                                              */
 /*==============================================================*/
 create table sales_rds.cdc_time
 (
     last_load       date,
     current_load  date
 );
+
+/*==============================================================*/
+/* Table: com_sales_order   ,  销售商品组合总表                 */
+/*==============================================================*/
+create table com_sales_order
+(
+date_sk              int  ,
+customer_sk          int  ,
+order_sk             int  ,
+product_sk1          int  ,
+amount1              decimal(18,2)  ,
+product_sk2          int  ,
+amount2              decimal(18,2)
+)
+partitioned by (order_date string)
+clustered by (order_sk) into 1 buckets
+row format delimited fields terminated by '\t'
+stored as orc tblproperties('transactional'='true');
