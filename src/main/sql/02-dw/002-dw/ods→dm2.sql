@@ -75,7 +75,7 @@ JOIN sales_dw.dim_date e ON DATE_FORMAT(a.order_date,'yyyy-MM-dd') = e.`date`;
 
 --装载商品组合表
 insert into com_sales_order partition(order_date='2019-07-31')
-select t1.date_sk,t1.customer_sk,t1.order_sk,t1.product_sk,t1.amount,t2.product_sk,t2.amount
+select t1.order_date_sk,t1.customer_sk,t1.order_sk,t1.product_sk,t1.order_amount,t2.product_sk,t2.order_amount
 from sales_dw.fact_sales_order t1 join sales_dw.fact_sales_order t2
 on t1.order_sk=t2.order_sk
-where t1.product_sk<t2.product_sk
+where t1.product_sk<t2.product_sk;
