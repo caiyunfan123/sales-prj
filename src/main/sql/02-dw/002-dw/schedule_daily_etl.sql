@@ -181,7 +181,7 @@ AND t3.product_sk IS NULL
 -- 处理新增的 product 记录
 INSERT INTO dim_product
 SELECT
-NULL,
+t.product_code,
 t.product_code,
 t.product_name,
 t.product_category,

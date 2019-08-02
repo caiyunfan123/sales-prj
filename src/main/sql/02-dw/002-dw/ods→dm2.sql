@@ -24,7 +24,7 @@ from sales_rds.dim_date;
 
 --装载客户表
 insert into sales_dw.dim_customer
-select sales_rds.row_sequence(),
+select customer_number,
 customer_number,
 customer_name,
 customer_street_address,
@@ -39,7 +39,7 @@ from sales_rds.customer;
 -- 装载产品维度表
 INSERT INTO sales_dw.dim_product (product_sk,product_code,product_name,product_category,`version`,effective_date,expiry_date)
 SELECT
-sales_rds.row_sequence(),
+product_code,
 product_code, 
 product_name, 
 product_category, 
@@ -51,7 +51,7 @@ FROM sales_rds.product;
 -- 装载订单维度表
 INSERT INTO sales_dw.dim_order(order_sk,order_number,`version`,effective_date,expiry_date)
 SELECT
-sales_rds.row_sequence(),
+order_number,
 order_number, 
 1, 
 order_date, 
