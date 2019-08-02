@@ -211,14 +211,15 @@ FROM sales_rds.sales_order, sales_rds.cdc_time
 WHERE entry_date >= last_load AND entry_date < current_load ) t1;
 
 
--- 装载销售订单事实表
-INSERT INTO  fact_sales_order partition(order_date)
+-- 装载销售订单事实表和销售商品组合表
+-- 先把装载销售订单事实表的数据加载到临时表中
+drop table if exists tmp
+create table tmp as (
 select order_sk,
 customer_sk,
 product_sk,
 date_sk,
 order_amount,
-${hivevar:pre_date} order_date
 from sales_rds.cdc_time as rds_cdc
 join sales_rds.sales_order as T0
 join dim_order on
@@ -233,3 +234,16 @@ where DATE_FORMAT(T0.order_date,'yyyy-MM-dd')=${hivevar:pre_date}
 and T0.entry_date >=rds_cdc.current_load and T0.entry_date<rds_cdc.last_load
 and T0.order_date >= dim_customer.effective_date and T0.order_date < dim_customer.expiry_date
 and T0.order_date >= dim_product.effective_date and T0.order_date < dim_product.expiry_date
+)
+
+--装载销售订单事实表
+INSERT INTO  fact_sales_order partition(order_date)
+select tmp.*,${hivevar:pre_date} order_date from tmp;
+
+--装载销售商品组合表
+insert into com_sales_order partition(order_date)
+select t1.date_sk,t1.customer_sk,t1.order_sk,t1.product_sk,t1.amount,t2.product_sk,t2.amount,
+${hivevar:pre_date} order_date
+from tmp t1 join tmp t2
+on t1.order_sk=t2.order_sk
+where t1.product_sk<t2.product_sk
