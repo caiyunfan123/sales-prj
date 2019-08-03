@@ -1,0 +1,4 @@
+#e-3-2_2.job
+type=command
+dependencies=e-3-1
+command=beeline -u jdbc:hive2://master:10000/sales_dw -f e-3-2-put_fact_order.sql

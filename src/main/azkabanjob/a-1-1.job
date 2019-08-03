@@ -1,0 +1,4 @@
+#a-1-1.job
+type=command
+dependencies=start
+command=beeline -u jdbc:hive2://master:10000/sales_dw -f a-1-1-put_cdctime.sql
