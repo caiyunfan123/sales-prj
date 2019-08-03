@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+	<property>
+		<name>hive.metastore.local</name>
+		<value>true</value>
+	</property>
+	<property>
+		<name>hive.metastore.warehouse.dir</name>
+		<value>/user/hive2/warehouse</value>
+		<description>location of default database for the warehouse</description>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionURL</name>
+		<value>jdbc:mysql://master:3306/metastore</value>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionDriverName</name>
+		<value>org.mariadb.jdbc.Driver</value>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionUserName</name>
+		<value>root</value>
+		<description>username to use against metastore database</description>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionPassword</name>
+		<value>admin</value>
+		<description>password to use against metastore database</description>
+	</property>
+	<property>
+		<name>hive.exec.mode.local.auto</name>
+		<value>true</value>
+		<description>Let Hive determine whether to run in local mode automatically</description>
+	</property>
+
+	<property>
+		<name>hive.optimize.sort.dynamic.partition</name>
+		<value>false</value>
+	</property>
+	<property>
+		<name>hive.support.concurrency</name>
+		<value>true</value>
+	</property>
+	<property>
+		<name>hive.enforce.bucketing</name>
+		<value>true</value>
+	</property>
+	<property>
+		<name>hive.exec.dynamic.partition.mode</name>
+		<value>nonstrict</value>
+	</property>
+	<property>
+		<name>hive.txn.manager</name>
+		<value>org.apache.hadoop.hive.ql.lockmgr.DbTxnManager</value>
+	</property>
+	<property>
+		<name>hive.compactor.initiator.on</name>
+		<value>true</value>
+	</property>
+	<property>
+		<name>hive.compactor.worker.threads</name>
+		<value>1</value>
+	</property>
+	<property>
+		<name>hive.in.test</name>
+		<value>true</value>
+	</property>
+	<property>
+		<name>hive.support.concurrency</name>
+		<value>true</value>
+	</property>
+	<property>
+		<name>hive.txn.manager</name>
+		<value>org.apache.hadoop.hive.ql.lockmgr.DbTxnManager</value>
+	</property>
+	<property>
+		<name>hive.strict.checks.cartesian.product</name>
+		<value>false</value>
+	</property>
+	<property>
+		<name>hive.mapred.mode</name>
+		<value>nonstrict</value>
+	</property>
+	<property>
+		<name>hive.exec.mode.local.auto.input.files.max</name>
+		<value>64</value>
+	</property>
+	<property>
+		<name>cur_date</name>
+		<value>CURRENT_DATE()</value>
+	</property>
+	<property>
+		<name>pre_date</name>
+		<value>DATE_ADD(${hiveconf:cur_date},-1)</value>
+	</property>
+	<property>
+		<name>max_date</name>
+		<value>CAST('2050-01-01' AS DATE)</value>
+	</property>
+
+</configuration>
