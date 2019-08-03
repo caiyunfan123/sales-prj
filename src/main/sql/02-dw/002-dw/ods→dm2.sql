@@ -61,6 +61,9 @@ FROM sales_rds.sales_order;
 
 -- 装载销售订单事实表
 INSERT into sales_dw.fact_sales_order partition(order_date='2019-07-31')
+-- 加一条测试数据
+insert into fact_sales_order partition(order_date='2019-07-31') values(1000,6,1,4184,1000);
+
 SELECT
 order_sk,
 customer_sk, 
