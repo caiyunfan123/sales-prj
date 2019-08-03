@@ -1,0 +1,4 @@
+#end.job
+type=command
+dependencies=e-3-2_1,e-3-2_2
+command=echo "job end"

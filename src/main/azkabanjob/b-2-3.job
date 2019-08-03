@@ -1,0 +1,4 @@
+#b-2-3.job
+type=command
+dependencies=b-2-2
+command=beeline -u jdbc:hive2://master:10000/sales_dw -f b-2-3-put_customer_name.sql

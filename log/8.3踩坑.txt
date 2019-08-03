@@ -1,0 +1,32 @@
+1.azkaban 2.5版本不支持flow2.0工作流，建议升级，因为官方已经停止了1.0的更新，后续都会更新2.0
+flow1.0：使用job来部署工作流，job与job之间设置依赖关系
+优点：部署简单
+缺点：1.必须有一个起始job和一个终止job收束所有的job，并且任务的名字只能是终止job的名字;
+	  2.会产生大量job的小文件，对命令的统一修改非常的麻烦。
+
+flow2.0：使用flow来部署工作流，所有的job都放在一个flow文件里，job之间明确依赖关系，任务可以自定义命名。
+
+2.hivevar:变量名 是hive变量的一种，其设置方式是set hivevar:key=value,在语句中的检索方式为select ${key};
+它可以在启动时被传入 hive -d key=value -d key2=value2
+或
+beeline -u jdbc:hive2://主机名:10000/数据库 --hivevar key=value --hivevar=key2=value2
+我推荐beeline的连接方式
+
+另外：关于变量的使用，应该尽量少又精，老师的源代码中
+SET hivevar:cur_date = CURRENT_DATE();
+SET hivevar:pre_date = DATE_ADD(current_date,-1);
+SET hivevar:max_date = CAST('2050-01-01' AS DATE); 
+应该直接简化为
+SET hivevar:max_date='2050-01-01'
+
+为了耦合性考虑，如果变量多的情况可以建立一个变量表与需要的表关联来使用，修改变量只需要传入一次变量值修改表值就可以了。
+
+--实测，从外部传入的字符串无法被识别为字符串，原因不明。
+
+建议在hive-site.xml配置文件中可以设置永久变量，在语句中用${hiveconf:变量名}来获取。
+附：设置完hive-site.xml后需要重启hiveserver2
+
+--2019.8.3 11:26 flow1.0任务执行成功
+经验总结：	1.job命令行尽量不传参数，因为改起来太麻烦了，小文件job太多
+			2.执行失败后修改sql语句，修改完了一定要先测试一下，通过了再打包上传，血泪教训
+			3.变量尽量统一设置在hive-site里，用的时候用${hiveconf:}，改起来方便，别问为什么，问就是血泪教训π__π
