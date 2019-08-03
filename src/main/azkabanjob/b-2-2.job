@@ -1,0 +1,4 @@
+#b-2-2.job
+type=command
+dependencies=b-2-1
+command=beeline -u jdbc:hive2://master:10000/sales_dw -f b-2-2-put_customer_address.sql
