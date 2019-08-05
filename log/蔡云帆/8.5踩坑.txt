@@ -1,0 +1,28 @@
+1.azkaban3原版是需要编译的版本，要么老实编译，要么就找编译好的资源
+2.3版本的web和exec都没自带conf目录，需要从solo版或者之前的版本中拿过来
+3.3版本开始需要配置log4j，直接百度拿就行
+4.3版本使用的flow2.0是基于yaml语法编写，该语法有几个强制规则：
+	1.文件以---开头
+	2.#注释
+	3.-表示一个字典，大约相当于xml中的<></>，也可以看做json中的[a,b,c,d]
+	4.采用键值对的方式存储数据key: value，尤其注意的是value前面必须有一个空格
+5.flow常用的几个字段：最外围的config里存放全局变量，node存放工作流各个job，node内由多个字典组成，其中name表示job名，type表示命令形式，dependsOn表示依赖关系，command内存放命令。
+
+6.kettle的下载地址:https://sourceforge.net/projects/pentaho/files/Data%20Integration/
+-推荐使用迅雷下载
+-解压后的目录不能带中文，windows上运行sqoop.bat启动，linux上运行sqoop.sh启动图形界面
+-需要把mysql的驱动放到lib文件夹中
+
+7.atlas元数据管理工具：
+-官网只能下载到未编译版本，需要自己编译或者找编译后的资源。我用的是atlas1.1的版本。
+-下载完，解压之后，基本按照
+https://blog.csdn.net/MuQianHuanHuoZhe/article/details/80888773
+这篇文档来做。
+
+-想启动基本的atlas，需要的环境有：zookeeper,hbase
+根据
+https://blog.csdn.net/MuQianHuanHuoZhe/article/details/82048755
+这篇文档来整合zookeeper和hbase，然后才能启动atlas服务（启动过程会等很久，不放心的话可以去logs文件夹里看日志，没有输出error就正常）。
+启动命令为根目录下的bin/atlas_start.py，快速创建一个例子的命令为bin/quick_start.py。
+
+-安装完成后，可以从http://主机名:21000 登陆web界面。
