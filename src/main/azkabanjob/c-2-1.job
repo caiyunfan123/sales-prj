@@ -1,0 +1,4 @@
+#c-2-1.job
+type=command
+dependencies=a-1-1
+command=beeline -u jdbc:hive2://master:10000/sales_dw -f c-2-1-update_product.sql

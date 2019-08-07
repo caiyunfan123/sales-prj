@@ -1,0 +1,85 @@
+---
+config:
+#这里填写全局变量，在各个job中用${}来使用。
+
+nodes:
+
+#a.job
+
+ - name: a-1-1
+   type: command
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f a-1-1-put_cdctime.sql
+
+#b.job
+
+ - name: b-2-1
+   type: command
+   dependsOn:
+     - a-1-1
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f b-2-1-update_customer_address.sql
+
+ - name: b-2-2
+   type: command
+   dependsOn:
+     - b-2-1
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f b-2-2-put_customer_address.sql
+
+ - name: b-2-3
+   type: command
+   dependsOn:
+     - b-2-2
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f b-2-3-put_customer_name.sql
+
+#c.job
+
+ - name: c-2-1
+   type: command
+   dependsOn:
+     - a-1-1
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f c-2-1-update_product.sql
+ 
+ - name: c-2-2
+   type: command
+   dependsOn:
+     - c-2-1
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f c-2-2-put_product.sql
+
+#d.job
+
+ - name: d-2-1
+   type: command
+   dependsOn:
+     - a-1-1
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f d-2-1-put_order.sql
+
+#e.job
+
+ - name: e-3-1
+   type: command
+   dependsOn:
+     - d-2-1
+     - c-2-2
+     - b-2-3
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f e-3-1-new_fact_tmp.sql
+
+ - name: e-3-2_1
+   type: command
+   dependsOn:
+     - e-3-1
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f e-3-2-put_com_order.sql
+
+ - name: e-3-2_2
+   type: command
+   dependsOn:
+     - e-3-1
+   config:
+     command: beeline -u jdbc:hive2://master:10000/sales_dw -f e-3-2-put_fact_order.sql
